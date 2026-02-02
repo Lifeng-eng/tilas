@@ -1,0 +1,13 @@
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Build
+target/
+*.class
+
+# Maven
+.mvn/wrapper/maven-wrapper.jar

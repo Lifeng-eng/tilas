@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ClazzMapper">
+    <insert id="add">
+        insert into clazz(name,room,begin_date,end_date,master_id,subject,create_time,update_time)
+        values(#{name},#{room},#{beginDate},#{endDate},#{masterId},#{subject},#{createTime},#{updateTime})
+    </insert>
+    <!--根据id修改信息-->
+    <update id="updateById">
+        UPDATE clazz
+        SET name=#{name},
+            room=#{room},
+            begin_date=#{beginDate},
+            end_date=#{endDate},
+            master_id=#{masterId},
+            subject=#{subject},
+            update_time=#{updateTime}
+        WHERE id = #{id}
+    </update>
+
+    <!--根据id删除班级-->
+    <delete id="deleteById">
+       delete from clazz where id=#{id}
+    </delete>
+
+<!-- 分页查询班级列表 -->
+<select id="page" resultType="com.example.entity.Clazz">
+    SELECT c.*, e.name AS masterName
+    FROM clazz c
+    LEFT JOIN emp e ON c.master_id = e.id
+    <where>
+        <if test="name != null and name != ''">
+            AND c.name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="begin != null">
+            AND c.end_date <![CDATA[>=]]> #{begin}
+        </if>
+        <if test="end != null">
+            AND c.end_date <![CDATA[<=]]> #{end}
+        </if>
+        <if test="room != null and room != ''">
+            AND c.room LIKE CONCAT('%', #{room}, '%')
+        </if>
+    </where>
+</select>
+
+    <select id="findById" resultType="com.example.dto.ClazzQueryDTO">
+        select * from clazz where id=#{id}
+    </select>
+    <select id="list" resultType="com.example.dto.ClazzQueryDTO">
+        select * from clazz
+    </select>
+</mapper>

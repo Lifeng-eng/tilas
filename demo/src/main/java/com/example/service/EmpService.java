@@ -7,6 +7,7 @@ import com.example.dto.EmpResponseByIdDTO;
 import com.example.entity.Emp;
 
 public interface EmpService {
+
     PageResult<EmpResponeDTO> page(EmpQueryParam empQueryParam);
 
     void save(Emp emp);

@@ -5,8 +5,8 @@ import com.example.mapper.LogMapper;
 import com.example.pojo.OperateLog;
 import com.example.service.LogService;
 import com.example.common.PageResult;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,16 +20,13 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public PageResult<OperateLog> page(Integer page, Integer pageSize) {
-        // 设置分页参数
-        PageHelper.startPage(page, pageSize);
+        // 使用 try-with-resources 确保 Page 资源正确清理
+        try (Page<OperateLog> logPage = PageHelper.startPage(page, pageSize)) {
+            // 执行查询
+            List<OperateLog> logList = logMapper.list();
 
-        // 执行查询
-        List<OperateLog> logList = logMapper.list();
-
-        // 封装分页结果
-        PageInfo<OperateLog> pageInfo = new PageInfo<>(logList);
-
-        // 返回封装的结果
-        return new PageResult<>(pageInfo.getTotal(), pageInfo.getList());
+            // 返回封装的结果
+            return new PageResult<>(logPage.getTotal(), logList);
+        }
     }
 }

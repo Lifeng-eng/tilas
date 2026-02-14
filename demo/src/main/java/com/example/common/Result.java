@@ -2,11 +2,17 @@ package com.example.common;
 
 import lombok.Data;
 
+// 静态工厂方法模式，创建对象，返回Result对象
 @Data
 public class Result<T> {
     private Integer code;
     private String msg;
     private T data;
+
+    // 私有化构造方法
+    private Result() {
+    }
+
 
     public static <T> Result<T> success() {
         return build(1, "success", null);

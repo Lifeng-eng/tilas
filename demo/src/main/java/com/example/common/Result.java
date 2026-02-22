@@ -1,9 +1,9 @@
 package com.example.common;
 
-import lombok.Data;
+import lombok.Getter;
 
 // 静态工厂方法模式，创建对象，返回Result对象
-@Data
+@Getter// 生成getter方法，用于序列化
 public class Result<T> {
     private Integer code;
     private String msg;
@@ -33,5 +33,6 @@ public class Result<T> {
         result.data = data;
         return result;
     }
+
 
 }

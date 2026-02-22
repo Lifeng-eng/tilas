@@ -5,8 +5,15 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 import java.util.Map;
 
+/**
+ * JWT 工具类
+ */
+
 public class JwtUtil {
 
+    /**
+     * 密钥
+     */
     // Base64 编码的密钥：对应 "业务"
     private static final String SECRET = "5Lia5Yqh";
 
@@ -28,6 +35,7 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS256, SECRET) // 使用HS256和密钥签名
                 .compact();
     }
+
 
     /**
      * 解析 JWT 令牌
